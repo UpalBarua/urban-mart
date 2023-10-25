@@ -1,3 +1,5 @@
+import Navbar from '@/components/navbar';
+import { cn } from '@/lib/utils';
 import localFont from 'next/font/local';
 
 const openSans = localFont({ src: '../../public/fonts/open-sans.ttf' });
@@ -8,8 +10,12 @@ type RootLayoutProps = {
 
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
-    <div className={`${openSans.className}`}>
-      <nav>Navbar</nav>
+    <div
+      className={cn(
+        'container max-w-6xl mx-auto px-2.5 md:px-4 lg:px-5',
+        openSans.className
+      )}>
+      <Navbar />
       {children}
       <footer>footer</footer>
     </div>
