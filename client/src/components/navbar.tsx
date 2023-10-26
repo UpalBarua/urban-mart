@@ -7,7 +7,7 @@ import {
   AiOutlineShoppingCart,
   AiOutlineUser,
 } from 'react-icons/ai';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
+import ThemeToggle from '@/components/ui/theme-toggle';
 import MobileMenu from './mobile-menu';
 import { Button } from '@/components/ui/button';
 import UserProfile from './user-profile';
@@ -51,7 +51,7 @@ const Navbar = () => {
   const user = '...';
 
   return (
-    <header className="sticky top-0 z-20 py-2 flex items-center justify-between">
+    <header className="sticky top-0 z-20 py-2 flex items-center justify-between dark:bg-primary-900 dark:text-primary-50/90 bg-[#EEEEF2] text-primary-950/90">
       <Logo />
       <nav className="flex items-center gap-x-1.5">
         <ul className="md:flex gap-x-1 items-center lg:gap-x-2.5 hidden">

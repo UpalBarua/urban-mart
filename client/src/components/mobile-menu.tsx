@@ -8,24 +8,24 @@ import Link from 'next/link';
 import { HiMenu } from 'react-icons/hi';
 import { Button } from '@/components/ui/button';
 
-const MENU_OPTIONS = [
+const navLinks = [
   {
     title: 'Home',
     href: '/',
   },
   {
-    title: 'Search Products',
+    title: 'Products',
     href: '/products',
   },
   {
-    title: 'My Wishlist',
+    title: 'Wishlist',
     href: '/wishlist',
   },
   {
     title: 'Shopping Cart',
     href: '/cart',
   },
-];
+] as const;
 
 function MobileMenu() {
   return (
@@ -36,7 +36,7 @@ function MobileMenu() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="p-2.5 mx-2.5 my-1 ">
-        {MENU_OPTIONS.map(({ title, href }) => (
+        {navLinks.map(({ title, href }) => (
           <DropdownMenuItem key={href}>
             <Link href={href}>{title}</Link>
           </DropdownMenuItem>
