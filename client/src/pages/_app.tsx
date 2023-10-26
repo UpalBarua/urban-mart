@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import RootLayout from '@/layouts/root-layout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
+import { AuthContextProvider } from '@/context/auth-context';
 
 const queryClient = new QueryClient({});
 
@@ -15,10 +16,12 @@ export default function App({ Component, pageProps }: AppProps) {
       enableSystem
       disableTransitionOnChange>
       <QueryClientProvider client={queryClient}>
-        <RootLayout>
-          <Component {...pageProps} />
-          <Toaster richColors />
-        </RootLayout>
+        <AuthContextProvider>
+          <RootLayout>
+            <Component {...pageProps} />
+            <Toaster richColors />
+          </RootLayout>
+        </AuthContextProvider>
       </QueryClientProvider>
     </ThemeProvider>
   );
