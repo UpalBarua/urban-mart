@@ -9,7 +9,7 @@ type UserProfileProps = {
 
 const UserProfile = ({ userName, profileImg }: UserProfileProps) => {
   return (
-    <Button asChild variant="ghost" className="shadow-none">
+    <Button asChild variant="ghost" className="shadow-none hidden md:flex">
       <Link href="/profile" className="flex gap-2.5 items-center">
         <Avatar>
           <AvatarImage src={profileImg} alt={userName} />

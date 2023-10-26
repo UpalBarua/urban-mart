@@ -53,7 +53,7 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-20 py-2 flex items-center justify-between">
       <Logo />
-      <nav className="flex items-center gap-x-2.5">
+      <nav className="flex items-center gap-x-1.5">
         <ul className="md:flex gap-x-1 items-center lg:gap-x-2.5 hidden">
           {navLinks.map(({ href, title, Icon, isProtected }) =>
             !isProtected || (isProtected && user) ? (
