@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import errorHandler from './middlewares/error-handler';
+import userRoutes from './routes/user-routes';
 
 dotenv.config();
 
@@ -16,8 +17,9 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
-
 app.use(errorHandler);
+
+app.use('/api/users', userRoutes);
 
 app.use((req: Request, res: Response) =>
   res.status(404).json({ message: 'not Found' })

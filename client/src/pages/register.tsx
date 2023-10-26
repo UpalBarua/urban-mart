@@ -50,10 +50,10 @@ const RegisterPage = () => {
   const { mutate: handleSignUp, isPending: isSigningUp } = useMutation({
     mutationFn: async ({ name, email, password }: SignUpFormType) => {
       await createUserWithEmailAndPassword(auth, email, password);
-      // await createUserProfile({
-      //   email,
-      //   userName: name,
-      // });
+      await createUserProfile({
+        email,
+        userName: name,
+      });
     },
     onSuccess: () => {
       toast.success('Successfully created new account');
