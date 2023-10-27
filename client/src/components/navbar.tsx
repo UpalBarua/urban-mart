@@ -27,7 +27,7 @@ const navLinks = [
     Icon: (
       <AiOutlineSearch className="text-xl dark:text-primary-50/50 text-primary-950/50" />
     ),
-    title: 'Search',
+    title: 'Products',
     isProtected: false,
   },
   {
@@ -70,7 +70,7 @@ const Navbar = () => {
           )}
         </ul>
         {user ? (
-          <UserProfile userName={user.userName} profileImg={user.photoURL} />
+          <UserProfile {...user} />
         ) : (
           <Button asChild className="text-base hidden md:inline-flex">
             <Link href="/login">
