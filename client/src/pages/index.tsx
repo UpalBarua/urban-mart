@@ -6,6 +6,7 @@ import Heading from '@/components/ui/heading';
 import NewProducts from '@/components/new-products';
 import BestSellerProducts from '@/components/best-seller-products';
 import OnSaleProducts from '@/components/on-sale-products';
+import AppAd from '@/components/app-ad';
 
 type HomePageProps = {
   products: Product[];
@@ -39,6 +40,7 @@ const HomePage = ({ products }: HomePageProps) => {
       <NewProducts products={products.slice(0, 6)} />
       <BestSellerProducts products={products.slice(0, 6)} />
       <OnSaleProducts products={products.slice(0, 6)} />
+      <AppAd />
     </main>
   );
 };
