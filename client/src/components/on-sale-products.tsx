@@ -2,14 +2,14 @@ import Heading from '@/components/ui/heading';
 import type { Product } from '@/types/types';
 import ProductCard from './product-card';
 
-type NewProductsProps = {
+type OnSaleProductsProps = {
   products: Product[];
 };
 
-const NewProducts = ({ products }: NewProductsProps) => {
+const OnSaleProducts = ({ products }: OnSaleProductsProps) => {
   return (
     <section className="pb-16 md:pb-28">
-      <Heading>New Products</Heading>
+      <Heading>Products On Sale</Heading>
       <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {products.map((product) => (
           <ProductCard
@@ -25,4 +25,4 @@ const NewProducts = ({ products }: NewProductsProps) => {
   );
 };
 
-export default NewProducts;
+export default OnSaleProducts;

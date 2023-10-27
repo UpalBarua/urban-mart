@@ -4,6 +4,8 @@ import ProductCard from '@/components/product-card';
 import { Product } from '@/types/types';
 import Heading from '@/components/ui/heading';
 import NewProducts from '@/components/new-products';
+import BestSellerProducts from '@/components/best-seller-products';
+import OnSaleProducts from '@/components/on-sale-products';
 
 type HomePageProps = {
   products: Product[];
@@ -35,6 +37,8 @@ const HomePage = ({ products }: HomePageProps) => {
     <main>
       <Banner />
       <NewProducts products={products.slice(0, 6)} />
+      <BestSellerProducts products={products.slice(0, 6)} />
+      <OnSaleProducts products={products.slice(0, 6)} />
     </main>
   );
 };
