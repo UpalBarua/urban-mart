@@ -1,31 +1,33 @@
 import mongoose, { Document } from 'mongoose';
-import z from 'zod';
+
+const categories = [
+  'Canned',
+  'Beverages',
+  'Fresh Produce',
+  'Dairy',
+  'Bakery',
+  'Pantry Staples',
+  'Snacks',
+  'Frozen Foods',
+] as const;
 
 type ProductDocument = Document & {
-  title: string;
+  name: string;
   imageUrl: string;
-  ratingAvg: string;
-  reviewsCount: string;
-  salesCount: string;
+  ratingAvg: number;
+  reviewsCount: number;
+  salesCount: number;
   price: number;
   stock: number;
-  seller: string;
   category: string;
-  description: {
-    main: string;
-    list: string[];
-  };
+  description: string;
   discount: number;
-  isNew: boolean;
   isOnSale: boolean;
   isBestSeller: boolean;
+  isNewProduct: boolean;
 };
 
-// ! Needs checking
-// const imageUrlSchema = z.string().url().nonempty();
-const imageUrlSchema = z.string();
-
-const productSchema = new mongoose.Schema<Document>(
+const productSchema = new mongoose.Schema<ProductDocument>(
   {
     name: {
       type: String,
@@ -40,22 +42,24 @@ const productSchema = new mongoose.Schema<Document>(
       match: [/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/, 'Invalid imageURL'],
     },
     ratingAvg: {
-      type: String,
+      type: Number,
       required: true,
-      default: 1.0,
+      min: 0,
+      max: 5,
     },
     reviewsCount: {
-      type: String,
+      type: Number,
       required: true,
+      min: 0,
     },
     salesCount: {
-      type: String,
+      type: Number,
       required: true,
+      min: 0,
     },
     price: {
       type: Number,
       required: true,
-      default: 0,
       min: 0,
     },
     stock: {
@@ -64,31 +68,36 @@ const productSchema = new mongoose.Schema<Document>(
       default: 0,
       min: 0,
     },
-    seller: {
-      type: String,
-      required: true,
-      default: 'kit kart',
-    },
     category: {
       type: String,
+      enum: categories,
     },
     description: {
-      main: {
-        type: String,
-        required: true,
-      },
-      list: {
-        type: [String],
-        required: true,
-      },
+      type: String,
+      required: true,
+      minLength: 20,
+      maxLength: 500,
     },
-    discount: Number,
-    isOnSale: Boolean,
-    isBestSeller: Boolean,
-    isNew: Boolean,
+    discount: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 50,
+    },
+    isOnSale: {
+      type: Boolean,
+      default: false,
+    },
+    isBestSeller: {
+      type: Boolean,
+      default: false,
+    },
+    isNewProduct: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
-    suppressReservedKeysWarning: true,
     timestamps: true,
   }
 );

@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import errorHandler from './middlewares/error-handler';
 import userRoutes from './routes/user-routes';
+import productRoutes from './routes/product-routes';
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(errorHandler);
 
 app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
 
 app.use((req: Request, res: Response) =>
   res.status(404).json({ message: 'not Found' })
