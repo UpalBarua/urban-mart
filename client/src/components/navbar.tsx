@@ -11,6 +11,7 @@ import ThemeToggle from '@/components/ui/theme-toggle';
 import MobileMenu from './mobile-menu';
 import { Button } from '@/components/ui/button';
 import UserProfile from './user-profile';
+import { useAuthContext } from '@/context/auth-context';
 
 const navLinks = [
   {
@@ -48,7 +49,7 @@ const navLinks = [
 ] as const;
 
 const Navbar = () => {
-  const user = '...';
+  const { user } = useAuthContext();
 
   return (
     <header className="sticky top-0 z-20 py-2 flex items-center justify-between dark:bg-primary-900 dark:text-primary-50/90 bg-[#EEEEF2] text-primary-950/90">
@@ -69,10 +70,7 @@ const Navbar = () => {
           )}
         </ul>
         {user ? (
-          <UserProfile
-            userName={'Upal Barua'}
-            profileImg="https://i.ibb.co/zP7qGZH/IMG-0707.jpg"
-          />
+          <UserProfile userName={user.userName} profileImg={user.photoURL} />
         ) : (
           <Button asChild className="text-base hidden md:inline-flex">
             <Link href="/login">

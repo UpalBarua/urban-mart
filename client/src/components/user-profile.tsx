@@ -1,18 +1,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import type { User } from '@/types/types';
 import Link from 'next/link';
 
-type UserProfileProps = {
-  userName: string;
-  profileImg?: string;
-};
-
-const UserProfile = ({ userName, profileImg }: UserProfileProps) => {
+const UserProfile = ({ userName, photoURL }: User) => {
   return (
     <Button asChild variant="ghost" className="shadow-none hidden md:flex">
       <Link href="/profile" className="flex gap-2.5 items-center">
         <Avatar>
-          <AvatarImage src={profileImg} alt={userName} />
+          <AvatarImage src={photoURL} alt={userName} />
           <AvatarFallback>
             {userName
               .split(' ')

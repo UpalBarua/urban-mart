@@ -1,10 +1,12 @@
 import axios from '@/api/axios';
+import type { User } from '@/types/types';
 
-export const createUserProfile = async (newUser: {
-  email: string;
-  userName: string;
-}) => {
+type createUserProfileArgs = Pick<User, 'userName' | 'email' | 'photoURL'>;
+
+export const createUserProfile = async (newUser: createUserProfileArgs) => {
   try {
+    console.log(newUser);
+
     const {
       data: { _id },
     } = await axios.post('/users', newUser);

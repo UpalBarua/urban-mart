@@ -53,6 +53,9 @@ const RegisterPage = () => {
       await createUserProfile({
         email,
         userName: name,
+        photoURL: `https://api.dicebear.com/7.x/fun-emoji/svg?seed=${name
+          .replace(' ', '-')
+          .toLowerCase()}`,
       });
     },
     onSuccess: () => {

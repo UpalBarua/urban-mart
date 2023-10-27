@@ -20,12 +20,18 @@ const GoogleAuthButton = ({ setError }: GoogleAuthButtonProps) => {
       const res = await signInWithPopup(auth, googleAuth);
       const { isNewUser } = getAdditionalUserInfo(res)!;
 
-      // if (isNewUser && res.user.displayName && res.user.email) {
-      //   await createUserProfile({
-      //     userName: res.user.displayName,
-      //     email: res.user.email,
-      //   });
-      // }
+      if (
+        isNewUser &&
+        res.user.displayName &&
+        res.user.email &&
+        res.user.photoURL
+      ) {
+        await createUserProfile({
+          userName: res.user.displayName,
+          email: res.user.email,
+          photoURL: res.user.photoURL,
+        });
+      }
     },
     onSuccess: () => {
       toast.success('Successfully logged in');
