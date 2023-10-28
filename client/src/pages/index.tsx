@@ -4,6 +4,7 @@ import Banner from '@/components/banner';
 import BestSellerProducts from '@/components/best-seller-products';
 import NewProducts from '@/components/new-products';
 import OnSaleProducts from '@/components/on-sale-products';
+import FeaturedProducts from '@/components/ui/featured-cards';
 import { Product } from '@/types/types';
 
 type HomePageProps = {
@@ -34,6 +35,7 @@ const HomePage = ({ products }: HomePageProps) => {
   return (
     <main>
       <Banner />
+      <FeaturedProducts products={products.slice(0, 6)} />
       <NewProducts products={products.slice(0, 6)} />
       <BestSellerProducts products={products.slice(0, 6)} />
       <OnSaleProducts products={products.slice(0, 6)} />
