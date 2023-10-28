@@ -13,7 +13,7 @@ type CartContextProviderProps = {
   children: React.ReactNode;
 };
 
-type CartContextProps = {
+type CartContextValue = {
   cartProducts: {
     product: Product;
     quantity: number;
@@ -43,7 +43,7 @@ type CartContextProps = {
   checkProductInCart: (productId: string) => boolean;
 };
 
-const CartContext = createContext<CartContextProps | null>(null);
+const CartContext = createContext<CartContextValue | null>(null);
 
 export const CartContextProvider = ({ children }: CartContextProviderProps) => {
   const queryClient = useQueryClient();
@@ -93,7 +93,8 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
         products: [...(oldCart?.products || []), newCartItem],
       }));
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['cart', user?._id] }),
     onError: (error) => console.error(error),
   });
 
@@ -107,7 +108,8 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
         products: oldCart.products.filter((item) => item._id !== cartItemId),
       }));
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['cart', user?._id] }),
     onError: (error) => console.error(error),
   });
 
@@ -131,7 +133,8 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
         ),
       }));
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['cart', user?._id] }),
     onError: (error) => console.error(error),
   });
 

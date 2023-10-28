@@ -1,5 +1,5 @@
-// import useWishlist from '@/hooks/useWishlist';
 import { useCartContext } from '@/context/cart-context';
+import { useWishListContext } from '@/context/wishlist-context';
 import type { Product } from '@/types/types';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,12 +7,6 @@ import { MouseEvent } from 'react';
 import { AiFillHeart, AiFillStar, AiOutlineHeart } from 'react-icons/ai';
 import { BiDollar } from 'react-icons/bi';
 import { BsCartPlus, BsFillCartCheckFill } from 'react-icons/bs';
-
-// type ProductCardProps = Product & {
-//   isOnCart: boolean;
-//   isProductInWishlist: boolean;
-//   addToCart: (cartItem: { product: Product; quantity: number }) => void;
-// };
 
 const ProductCard = ({
   _id,
@@ -23,8 +17,8 @@ const ProductCard = ({
   ratingAvg,
   ...restProps
 }: Product) => {
-  // const { toggleWishlistProduct } = useWishlist();
-  const isProductInWishlist = false;
+  const { toggleWishlistProduct, checkProductInWishlist } =
+    useWishListContext();
   const { addToCart, checkProductInCart } = useCartContext();
 
   const handleAddToCart = (
@@ -51,9 +45,9 @@ const ProductCard = ({
   ) => {
     event.preventDefault();
 
-    // if (_id) {
-    //   toggleWishlistProduct(_id);
-    // }
+    if (_id) {
+      toggleWishlistProduct(_id);
+    }
   };
 
   return (
@@ -90,7 +84,11 @@ const ProductCard = ({
             <button
               className="p-2 text-xl text-pink-500 dark:border-pink-900 border border-pink-200 shadow-sm rounded-full transition-colors bg-pink-200/80 hover:bg-pink-200 md:text-2xl dark:bg-pink-900/50"
               onClick={handleAddToWishlist}>
-              {isProductInWishlist ? <AiFillHeart /> : <AiOutlineHeart />}
+              {checkProductInWishlist(_id) ? (
+                <AiFillHeart />
+              ) : (
+                <AiOutlineHeart />
+              )}
             </button>
             <button
               className="p-2 text-xl text-green-500 rounded-full shadow-sm border border-green-200 dark:bg-green-900/50 dark:border-green-900 transition-colors bg-green-200/80 hover:bg-green-200 md:text-2xl"
