@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import errorHandler from './middlewares/error-handler';
 import userRoutes from './routes/user-routes';
 import productRoutes from './routes/product-routes';
+import cartRoutes from './routes/cart-routes';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(errorHandler);
 
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/carts', cartRoutes);
 
 app.use((req: Request, res: Response) =>
   res.status(404).json({ message: 'not Found' })

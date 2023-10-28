@@ -14,7 +14,7 @@ const AppAd = () => {
         <Heading className="sm:text-start pb-0 lg:pb-0">
           Discover the Convenience of Our App
         </Heading>
-        <p className="pb-3 text-primary-600 lg:text-base">
+        <p className="pb-3 text-primary-600 lg:text-base dark:text-primary-300">
           Download our application today from the Play Store or the App Store to
           enjoy an expedited grocery shopping experience.
         </p>

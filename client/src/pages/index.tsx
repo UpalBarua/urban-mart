@@ -33,7 +33,6 @@ export const getStaticProps = async () => {
 };
 
 const HomePage = ({ products }: HomePageProps) => {
-  console.log(products);
   return (
     <main>
       <Banner />

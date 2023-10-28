@@ -1,18 +1,18 @@
 // import useWishlist from '@/hooks/useWishlist';
+import { useCartContext } from '@/context/cart-context';
 import type { Product } from '@/types/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MouseEvent } from 'react';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { AiFillHeart, AiFillStar, AiOutlineHeart } from 'react-icons/ai';
 import { BiDollar } from 'react-icons/bi';
 import { BsCartPlus, BsFillCartCheckFill } from 'react-icons/bs';
-import { AiFillStar } from 'react-icons/ai';
 
-type ProductCardProps = Product & {
-  isOnCart: boolean;
-  isProductInWishlist: boolean;
-  addToCart: (cartItem: { product: Product; quantity: number }) => void;
-};
+// type ProductCardProps = Product & {
+//   isOnCart: boolean;
+//   isProductInWishlist: boolean;
+//   addToCart: (cartItem: { product: Product; quantity: number }) => void;
+// };
 
 const ProductCard = ({
   _id,
@@ -20,28 +20,37 @@ const ProductCard = ({
   imageUrl,
   price,
   description,
-  addToCart,
-  isOnCart,
-  isProductInWishlist,
   ratingAvg,
   ...restProps
-}: ProductCardProps) => {
+}: Product) => {
   // const { toggleWishlistProduct } = useWishlist();
+  const isProductInWishlist = false;
+  const { addToCart, checkProductInCart } = useCartContext();
 
   const handleAddToCart = (
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
-    // event.preventDefault();
-    // addToCart({
-    //   product: { _id, name, imageUrl, price, description, ...restProps },
-    //   quantity: 1,
-    // });
+    event.preventDefault();
+
+    addToCart({
+      product: {
+        _id,
+        name,
+        imageUrl,
+        price,
+        description,
+        ratingAvg,
+        ...restProps,
+      },
+      quantity: 1,
+    });
   };
 
   const handleAddToWishlist = (
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
-    // event.preventDefault();
+    event.preventDefault();
+
     // if (_id) {
     //   toggleWishlistProduct(_id);
     // }
@@ -86,7 +95,11 @@ const ProductCard = ({
             <button
               className="p-2 text-xl text-green-500 rounded-full shadow-sm border border-green-200 dark:bg-green-900/50 dark:border-green-900 transition-colors bg-green-200/80 hover:bg-green-200 md:text-2xl"
               onClick={handleAddToCart}>
-              {isOnCart ? <BsFillCartCheckFill /> : <BsCartPlus />}
+              {checkProductInCart(_id) ? (
+                <BsFillCartCheckFill />
+              ) : (
+                <BsCartPlus />
+              )}
             </button>
           </div>
         </footer>

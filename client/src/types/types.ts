@@ -25,3 +25,16 @@ export type Product = {
   isOnSale: boolean;
   isBestSeller: boolean;
 };
+
+export type Cart = {
+  _id: string;
+  userId: string;
+  products: {
+    product: Product;
+    quantity: number;
+    _id: 'string';
+  }[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};

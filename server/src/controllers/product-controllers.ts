@@ -1,34 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { z } from 'zod';
-import Product from '../models/product-model';
 import { isValidObjectId } from 'mongoose';
-
-const categories = [
-  'Canned',
-  'Beverages',
-  'Fresh Produce',
-  'Dairy',
-  'Bakery',
-  'Pantry Staples',
-  'Snacks',
-  'Frozen Foods',
-] as const;
-
-const productSchema = z.object({
-  name: z.string().min(5).max(100),
-  imageUrl: z.string().url(),
-  ratingAvg: z.number().min(0).max(5),
-  reviewsCount: z.number().min(0),
-  salesCount: z.number().min(0),
-  price: z.number().min(0),
-  stock: z.number().min(0),
-  category: z.enum(categories),
-  description: z.string().min(20).max(500),
-  discount: z.number().min(0).max(50).default(0),
-  isOnSale: z.boolean().default(false),
-  isBestSeller: z.boolean().default(false),
-  isNewProduct: z.boolean().default(false),
-});
+import Product from '../models/product-model';
+import { productSchema } from '../utils/schemas';
 
 export const createProduct = async (
   req: Request,

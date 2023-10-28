@@ -11,10 +11,10 @@ export const createUserProfile = async (newUser: createUserProfileArgs) => {
       data: { _id },
     } = await axios.post('/users', newUser);
 
-    // await axios.post('/cart', {
-    //   userId: _id,
-    //   products: [],
-    // });
+    await axios.post('/cart', {
+      userId: _id,
+      products: [],
+    });
 
     // await axios.post('/wishlist', {
     //   userId: _id,

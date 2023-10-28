@@ -1,14 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { z } from 'zod';
 import User from '../models/user-model';
-
-const emailSchema = z.string().email();
-
-const userSchema = z.object({
-  email: emailSchema,
-  userName: z.string().min(3).max(20),
-  photoURL: z.string().url(),
-});
+import { userSchema } from '../utils/schemas';
+import { z } from 'zod';
 
 export const createNewUser = async (
   req: Request,
@@ -51,7 +44,7 @@ export const getUserByEmail = async (
   try {
     const { email } = req.params;
 
-    const validationResult = emailSchema.safeParse(email);
+    const validationResult = z.string().email().safeParse(email);
 
     if (!validationResult.success) {
       return res.status(400).json({ message: 'Invalid email address' });
