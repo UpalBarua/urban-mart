@@ -1,12 +1,10 @@
 import axios from '@/api/axios';
-import Banner from '@/components/banner';
-import ProductCard from '@/components/product-card';
-import { Product } from '@/types/types';
-import Heading from '@/components/ui/heading';
-import NewProducts from '@/components/new-products';
-import BestSellerProducts from '@/components/best-seller-products';
-import OnSaleProducts from '@/components/on-sale-products';
 import AppAd from '@/components/app-ad';
+import Banner from '@/components/banner';
+import BestSellerProducts from '@/components/best-seller-products';
+import NewProducts from '@/components/new-products';
+import OnSaleProducts from '@/components/on-sale-products';
+import { Product } from '@/types/types';
 
 type HomePageProps = {
   products: Product[];

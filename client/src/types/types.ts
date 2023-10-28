@@ -38,3 +38,10 @@ export type Cart = {
   updatedAt: string;
   __v: number;
 };
+
+export type Wishlist = {
+  _id: string;
+  userId: string;
+  products: Product[];
+  __v: 0;
+};

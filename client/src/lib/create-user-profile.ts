@@ -11,15 +11,15 @@ export const createUserProfile = async (newUser: createUserProfileArgs) => {
       data: { _id },
     } = await axios.post('/users', newUser);
 
-    await axios.post('/cart', {
+    await axios.post('/carts', {
       userId: _id,
       products: [],
     });
 
-    // await axios.post('/wishlist', {
-    //   userId: _id,
-    //   products: [],
-    // });
+    await axios.post('/wishlist', {
+      userId: _id,
+      products: [],
+    });
   } catch (error) {
     console.error(error);
   }

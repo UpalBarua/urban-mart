@@ -1,10 +1,10 @@
 import axios from '@/api/axios';
 import type { Cart, Product } from '@/types/types';
 import {
-  type UseMutateFunction,
   useMutation,
   useQuery,
   useQueryClient,
+  type UseMutateFunction,
 } from '@tanstack/react-query';
 import { createContext, useContext } from 'react';
 import { useAuthContext } from './auth-context';
@@ -54,7 +54,7 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['cart', user?._id],
+    queryKey: ['cart'],
     queryFn: async () => {
       try {
         const { data } = await axios.get<Cart>(`/carts/${user?._id}`);
@@ -65,8 +65,6 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
     },
     enabled: !!user?._id,
   });
-
-  console.log(cart);
 
   const checkProductInCart = (productId: string) => {
     return cart.products?.some(({ product }) => product?._id === productId);
@@ -86,6 +84,14 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
         product: product?._id,
         quantity,
       });
+    },
+    onMutate: (newCartItem) => {
+      const data = queryClient.getQueryData(['cart', user?._id]);
+      console.log({ data });
+
+      queryClient.setQueryData(['cart'], (oldCart: Cart) =>
+        console.log({ oldCart })
+      );
     },
     onMutate: (newCartItem) => {
       queryClient.setQueryData(['cart'], (oldCart: Cart) => ({
@@ -126,7 +132,7 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
       });
     },
     onMutate: ({ cartItemId, quantity }) => {
-      queryClient.setQueryData(['cart'], (oldCart: Cart) => ({
+      queryClient.setQueryData(['cart', user?._id], (oldCart: Cart) => ({
         ...oldCart,
         products: oldCart.products.map((cartItem) =>
           cartItem._id === cartItemId ? { ...cartItem, quantity } : cartItem

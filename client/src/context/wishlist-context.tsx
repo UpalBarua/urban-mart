@@ -1,21 +1,14 @@
-import { useContext, createContext } from 'react';
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  UseMutateFunction,
-} from '@tanstack/react-query';
-import { useAuthContext } from './auth-context';
-import type { Product } from '@/types/types';
 import axios from '@/api/axios';
+import type { Product, Wishlist } from '@/types/types';
+import {
+  UseMutateFunction,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-
-// NEEDS TO BE UPDATED
-type Wishlist = {
-  _id: string;
-  userId: string;
-  products: Product[];
-};
+import { createContext, useContext } from 'react';
+import { useAuthContext } from './auth-context';
 
 type WishListContextProviderProps = {
   children: React.ReactNode;
@@ -80,27 +73,31 @@ export const WishListContextProvider = ({
       });
     },
     onMutate: (wishlistProductId) => {
-      queryClient.setQueryData(['wishlist'], (prevWishlist: Wishlist) => {
-        const { products } = prevWishlist;
+      queryClient.setQueryData(
+        ['wishlist', user?._id],
+        (prevWishlist: Wishlist) => {
+          const isProductInWishlist = prevWishlist.products.some(
+            (product) => product._id === wishlistProductId
+          );
 
-        const isProductInWishlist = products.some(
-          (product) => product._id === wishlistProductId
-        );
+          if (isProductInWishlist) {
+            return {
+              ...prevWishlist,
+              products: prevWishlist.products.filter(
+                (product) => product._id !== wishlistProductId
+              ),
+            };
+          }
 
-        if (isProductInWishlist) {
           return {
             ...prevWishlist,
-            products: products.filter(
-              (product) => product._id !== wishlistProductId
-            ),
+            products: [
+              ...(prevWishlist.products || []),
+              { _id: wishlistProductId },
+            ],
           };
         }
-
-        return {
-          ...prevWishlist,
-          products: [...(products || []), { _id: wishlistProductId }],
-        };
-      });
+      );
     },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ['wishlist', user?._id] }),

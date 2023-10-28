@@ -59,6 +59,7 @@ const ProductCard = ({
           className="object-cover object-center rounded-xl"
           src={imageUrl}
           alt={name}
+          quality={95}
           fill
         />
       </div>
@@ -82,7 +83,7 @@ const ProductCard = ({
           </p>
           <div className="space-x-2.5">
             <button
-              className="p-2 text-xl text-pink-500 dark:border-pink-900 border border-pink-200 shadow-sm rounded-full transition-colors bg-pink-200/80 hover:bg-pink-200 md:text-2xl dark:bg-pink-900/50"
+              className="p-2 text-xl text-pink-500 dark:border-pink-900 border outline-none border-pink-200 shadow-sm rounded-full transition-colors bg-pink-200/80 hover:bg-pink-200 md:text-2xl dark:bg-pink-900/50"
               onClick={handleAddToWishlist}>
               {checkProductInWishlist(_id) ? (
                 <AiFillHeart />
@@ -91,7 +92,7 @@ const ProductCard = ({
               )}
             </button>
             <button
-              className="p-2 text-xl text-green-500 rounded-full shadow-sm border border-green-200 dark:bg-green-900/50 dark:border-green-900 transition-colors bg-green-200/80 hover:bg-green-200 md:text-2xl"
+              className="p-2 text-xl text-green-500 rounded-full shadow-sm outline-none border border-green-200 dark:bg-green-900/50 dark:border-green-900 transition-colors bg-green-200/80 hover:bg-green-200 md:text-2xl"
               onClick={handleAddToCart}>
               {checkProductInCart(_id) ? (
                 <BsFillCartCheckFill />
