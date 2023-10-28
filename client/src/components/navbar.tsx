@@ -12,6 +12,8 @@ import MobileMenu from './mobile-menu';
 import { Button } from '@/components/ui/button';
 import UserProfile from './user-profile';
 import { useAuthContext } from '@/context/auth-context';
+import { auth } from '@/firebase/firebase.config';
+import { signOut } from 'firebase/auth';
 
 const navLinks = [
   {
@@ -81,6 +83,9 @@ const Navbar = () => {
         )}
         <ThemeToggle />
         <MobileMenu />
+        <Button variant="destructive" onClick={() => signOut(auth)}>
+          logout
+        </Button>
       </nav>
     </header>
   );
