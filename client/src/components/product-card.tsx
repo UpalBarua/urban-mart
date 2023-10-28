@@ -66,7 +66,7 @@ const ProductCard = ({
       <div className="p-1 space-y-1 sm:space-y-1.5 sm:p-2">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-medium flex-1">{name}</h3>
-          <div className="text-sm bg-yellow-100 dark:bg-yellow-900 flex items-center gap-x-1 rounded-full px-3 py-0.5 text-yellow-500 font-medium border border-yellow-200 border-yellow-900/50">
+          <div className="text-sm bg-yellow-100 dark:bg-yellow-900/60 flex items-center gap-x-1 rounded-full px-3 py-0.5 text-yellow-500 font-medium border border-yellow-200 border-yellow-900/50">
             <AiFillStar />
             <span>{ratingAvg}</span>
           </div>

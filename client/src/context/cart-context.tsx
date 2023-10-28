@@ -54,7 +54,7 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['cart'],
+    queryKey: ['cart', user?._id],
     queryFn: async () => {
       try {
         const { data } = await axios.get<Cart>(`/carts/${user?._id}`);
@@ -86,15 +86,7 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
       });
     },
     onMutate: (newCartItem) => {
-      const data = queryClient.getQueryData(['cart', user?._id]);
-      console.log({ data });
-
-      queryClient.setQueryData(['cart'], (oldCart: Cart) =>
-        console.log({ oldCart })
-      );
-    },
-    onMutate: (newCartItem) => {
-      queryClient.setQueryData(['cart'], (oldCart: Cart) => ({
+      queryClient.setQueryData(['cart', user?._id], (oldCart: Cart) => ({
         ...oldCart,
         products: [...(oldCart?.products || []), newCartItem],
       }));
@@ -109,7 +101,7 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
       await axios.delete(`/carts/${user?._id}?cartItemId=${cartItemId}`);
     },
     onMutate: (cartItemId) => {
-      queryClient.setQueryData(['cart'], (oldCart: Cart) => ({
+      queryClient.setQueryData(['cart', user?._id], (oldCart: Cart) => ({
         ...oldCart,
         products: oldCart.products.filter((item) => item._id !== cartItemId),
       }));
