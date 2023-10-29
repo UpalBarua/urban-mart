@@ -45,3 +45,14 @@ export type Wishlist = {
   products: Product[];
   __v: 0;
 };
+
+export type Review = {
+  _id: string;
+  user: User | string;
+  product: Product | string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};

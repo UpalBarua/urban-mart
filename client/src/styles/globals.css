@@ -7,6 +7,19 @@ body {
   @apply dark:bg-primary-900 dark:text-primary-50/90 bg-primary-50/25 text-primary-950/90 min-h-screen;
 }
 
+@layer utilities {
+  @variants responsive {
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  }
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

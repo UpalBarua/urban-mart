@@ -3,7 +3,7 @@ import { BiDollar } from 'react-icons/bi';
 import ProductQuantity from '@/components/ui/product-quantity';
 // import ReviewCard from '@/components/ReviewCard/ReviewCard';
 // import ReviewForm from '@/components/ReviewForm/ReviewForm';
-import type { Product } from '@/types/types';
+import type { Product, Review } from '@/types/types';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -20,6 +20,9 @@ import { PhotoProvider, PhotoView } from 'react-photo-view';
 import { Button } from '@/components/ui/button';
 import { useCartContext } from '@/context/cart-context';
 import { useAuthContext } from '@/context/auth-context';
+import ReviewForm from '@/components/ui/review-form';
+import { cn } from '@/lib/utils';
+import ReviewCard from '@/components/review-card';
 
 export const getStaticPaths = async () => {
   try {
@@ -104,14 +107,19 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
     addToCart({ product: productDetails, quantity: productQuantity });
   };
 
-  // const { data: reviews = [] } = useQuery(['reviews', _id], async () => {
-  //   try {
-  //     const { data } = await axios.get(`/reviews?productId=${_id}`);
-  //     return data;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // });
+  const { data: reviews = [] } = useQuery({
+    queryKey: ['reviews', user?._id],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get<Review[]>(
+          `/reviews?productId=${user?._id}`
+        );
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  });
 
   const handleCheckout = async () => {
     // if (!userId) {
@@ -202,18 +210,21 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
           </Button>
         </div>
       </div>
-      <div className="overflow-y-scroll pb-5 h-screen lg:col-span-3">
-        {/* <div className="flex sticky top-0 justify-between items-center pb-6 text-xl bg-primary-50">
-          <h2 className="font-bold capitalize">Top Reviews</h2>
-          {userId ? (
+      <div className="overflow-y-scroll pb-5 h-screen lg:col-span-3 p-1 no-scrollbar">
+        <div className="flex sticky top-0 justify-between items-center pb-3 text-xl">
+          <h3 className="font-medium capitalize">Top Reviews</h3>
+          {user?._id ? (
             <button
-              className={`p-1 text-2xl text-white rounded-full ${
-                isReviewEditing ? 'bg-red-500' : 'bg-green-500'
-              }`}
+              className={cn(
+                'p-1 text-xl text-white rounded-full',
+                isReviewEditing ? 'bg-red-500' : 'bg-accent-500'
+              )}
               onClick={handleReviewEditing}>
               {isReviewEditing ? <MdOutlineClose /> : <MdAdd />}
             </button>
-          ) : null}
+          ) : (
+            <p>Login to add review</p>
+          )}
         </div>
         <ReviewForm
           isReviewEditing={isReviewEditing}
@@ -221,10 +232,10 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
           productId={_id || ''}
         />
         <ul className="grid gap-3 lg:gap-4">
-          {reviews?.map((review: Review) => (
+          {reviews?.map((review) => (
             <ReviewCard key={review._id} {...review} />
           ))}
-        </ul> */}
+        </ul>
       </div>
     </main>
   );
