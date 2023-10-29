@@ -7,6 +7,7 @@ import '@/styles/globals.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
 import { Toaster } from 'sonner';
+import { PhotoProvider } from 'react-photo-view';
 
 const queryClient = new QueryClient();
 
@@ -21,10 +22,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <AuthContextProvider>
           <CartContextProvider>
             <WishListContextProvider>
-              <RootLayout>
-                <Component {...pageProps} />
-                <Toaster richColors />
-              </RootLayout>
+              <PhotoProvider>
+                <RootLayout>
+                  <Component {...pageProps} />
+                  <Toaster richColors />
+                </RootLayout>
+              </PhotoProvider>
             </WishListContextProvider>
           </CartContextProvider>
         </AuthContextProvider>
