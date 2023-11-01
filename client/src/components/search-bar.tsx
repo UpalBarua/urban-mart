@@ -10,7 +10,7 @@ const SearchBar = () => {
 
   return (
     <form
-      className="flex items-center w-[24rem] gap-x-1.5 mx-auto justify-center pb-10"
+      className="flex items-center relative w-9/12 mt-8 h-12"
       onSubmit={(event) => {
         event.preventDefault();
         router.push(`/products?search=${searchString}`);
@@ -20,11 +20,13 @@ const SearchBar = () => {
         type="text"
         value={searchString}
         onChange={(event) => setSearchString(event.target.value)}
-        className="w-full px-5"
+        className="h-12 px-4 rounded-xl"
       />
-      <Button>
-        <BsSearch className="text-xl text-primary-800" />
-        <span>Search</span>
+      <Button
+        size="icon"
+        variant="ghost"
+        className="rounded-l-none rounded-r-xl absolute right-0 shadow-none top-0 h-full sm:h-full sm:w-14">
+        <BsSearch className="text-xl" />
       </Button>
     </form>
   );

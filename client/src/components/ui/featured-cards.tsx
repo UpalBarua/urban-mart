@@ -28,7 +28,7 @@ const FeaturedProducts = ({ products }: FeaturedProductsProps) => {
         }}
         pagination={true}
         modules={[EffectCoverflow]}
-        className="mySwiper mb-28">
+        className="mySwiper mb-16 md:mb-28 rounded-2xl">
         {products?.map((product) => (
           <SwiperSlide
             key={product._id}

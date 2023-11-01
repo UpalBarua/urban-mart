@@ -5,11 +5,14 @@ import { BsFillBasket2Fill } from 'react-icons/bs';
 const Logo = ({ className = '' }: { className?: string }) => {
   return (
     <Link
-      className={cn('flex gap-x-2 items-center text-lg', className)}
+      className={cn(
+        'flex gap-x-2 items-center justify-center text-lg sm:text-xl',
+        className
+      )}
       href="/">
-      <BsFillBasket2Fill className="sm:text-2xl text-accent-500" />
+      <BsFillBasket2Fill className="sm:text-xl text-xl text-accent-500" />
       <h1 className="font-extrabold capitalize tracking-tight text-black dark:text-white">
-        Urban Mart
+        UrbanMart
       </h1>
     </Link>
   );

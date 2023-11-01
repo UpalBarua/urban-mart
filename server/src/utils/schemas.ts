@@ -28,6 +28,8 @@ export const productSchema = z.object({
   isNewProduct: z.boolean().default(false),
 });
 
+export type Product = z.infer<typeof productSchema>;
+
 export const userSchema = z.object({
   email: z.string().email(),
   userName: z.string().min(3).max(20),

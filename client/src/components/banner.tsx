@@ -1,12 +1,19 @@
+import Image from 'next/image';
+import SearchBar from '@/components/search-bar';
+
 const Banner = () => {
   return (
-    <section className="py-5 sm:py-8 md:py-10 lg:py-12 lg:pb-3">
-      <div className="pb-5 mx-auto space-y-4 text-center sm:pb-8 lg:pb-10 sm:space-y-3 lg:space-y-5 max-w-3xl">
-        <h1 className="text-2xl font-extrabold tracking-tight sm:text-4xl text-primary-950 lg:text-6xl lg:leading-[1.125] dark:text-primary-50">
+    <section className="grid grid-cols-1 sm:grid-cols-2 mx-auto items-center justify-center gap-4 px-2 pb-10 lg:px-10 md:pb-16 sm:pt-6">
+      <div>
+        <h1 className="font-extrabold tracking-tight text-primary-950 dark:text-primary-50 text-[clamp(1.875rem,1rem+4vw,10rem)] leading-[1.25] lg:leading-[1.125] text-center sm:text-start">
           Welcome to <strong className="text-accent-500">Urban Mart</strong>,{' '}
           Where Your Store Comes to Your{' '}
           <span className="underline">Doorstep</span>!
         </h1>
+        <SearchBar />
+      </div>
+      <div className="relative w-full h-[min(30rem,70dvw)] -order-1 sm:order-1">
+        <Image src="/images/banner.svg" alt="banner image" fill priority />
       </div>
     </section>
   );

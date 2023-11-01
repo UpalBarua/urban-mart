@@ -1,3 +1,4 @@
+import axios from '@/api/axios';
 import CartItem from '@/components/cart-item';
 import OrderSummery from '@/components/order-summery';
 import RouteGuard from '@/components/route-guard';
@@ -35,20 +36,20 @@ const CartPage = () => {
   );
 
   const handleCheckout = async () => {
-    // try {
-    //   const { data } = await axios.post('/payment/create-checkout-session', {
-    //     products: cartProducts,
-    //   });
-    //   if (data?.url) {
-    //     await axios.post('/orders', {
-    //       user: _id,
-    //       orders: cartProducts,
-    //     });
-    //     router.push(data.url);
-    //   }
-    // } catch (error: any) {
-    //   console.log(error.message);
-    // }
+    try {
+      const { data } = await axios.post('/payment/create-checkout-session', {
+        products: cartProducts,
+      });
+      if (data?.url) {
+        // await axios.post('/orders', {
+        //   user: _id,
+        //   orders: cartProducts,
+        // });
+        router.push(data.url);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

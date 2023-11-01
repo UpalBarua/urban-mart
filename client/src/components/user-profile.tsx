@@ -5,7 +5,10 @@ import Link from 'next/link';
 
 const UserProfile = ({ userName, photoURL }: User) => {
   return (
-    <Button asChild variant="ghost" className="shadow-none hidden md:flex">
+    <Button
+      asChild
+      variant="ghost"
+      className="gap-2.5 items-center px-2.5 font-medium py-1.5 rounded-lg border border-transparent hover:bg-white hover:border-primary-50 hover:shadow-sm transition-colors focus-visible:bg-white focus-visible:border-primary-50 focus-visible:shadow-sm dark:hover:bg-primary-800 dark:focus-visible:bg-primary-800 dark:hover:border-primary-700 dark:focus-visible:border-primary-700 shadow-none hidden sm:flex">
       <Link href="/profile" className="flex gap-2.5 items-center">
         <Avatar>
           <AvatarImage src={photoURL} alt={userName} />

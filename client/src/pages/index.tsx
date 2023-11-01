@@ -41,7 +41,7 @@ const HomePage = ({ products }: HomePageProps) => {
   return (
     <main>
       <Banner />
-      <SearchBar />
+      {/* <SearchBar /> */}
       <FeaturedProducts products={products.slice(0, 6)} />
       <NewProducts products={products.slice(0, 6)} />
       <BestSellerProducts products={products.slice(0, 6)} />

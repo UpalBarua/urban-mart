@@ -1,28 +1,23 @@
 import axios from '@/api/axios';
-import { BiDollar } from 'react-icons/bi';
-import ProductQuantity from '@/components/ui/product-quantity';
-// import ReviewCard from '@/components/ReviewCard/ReviewCard';
-// import ReviewForm from '@/components/ReviewForm/ReviewForm';
+import ReviewCard from '@/components/review-card';
+import { Button } from '@/components/ui/button';
+import ReviewForm from '@/components/ui/review-form';
+import { useAuthContext } from '@/context/auth-context';
+import { useCartContext } from '@/context/cart-context';
+import { cn } from '@/lib/utils';
 import type { Product, Review } from '@/types/types';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { toast } from 'sonner';
 import { AiFillStar } from 'react-icons/ai';
+import { BiDollar } from 'react-icons/bi';
 import { BsCart3, BsFillShareFill, BsTag } from 'react-icons/bs';
 import { GoReport } from 'react-icons/go';
-import { ImPriceTag } from 'react-icons/im';
 import { MdAdd, MdOutlineClose } from 'react-icons/md';
 import { RxDotFilled } from 'react-icons/rx';
-import { TbCurrencyTaka } from 'react-icons/tb';
-import { PhotoProvider, PhotoView } from 'react-photo-view';
-import { Button } from '@/components/ui/button';
-import { useCartContext } from '@/context/cart-context';
-import { useAuthContext } from '@/context/auth-context';
-import ReviewForm from '@/components/ui/review-form';
-import { cn } from '@/lib/utils';
-import ReviewCard from '@/components/review-card';
+import { PhotoView } from 'react-photo-view';
+import { toast } from 'sonner';
 
 export const getStaticPaths = async () => {
   try {
@@ -75,7 +70,6 @@ export const getStaticProps = async ({
 };
 
 function ProductDetails({ productDetails }: { productDetails: Product }) {
-  const [productQuantity, setProductQuantity] = useState(1);
   const [isReviewEditing, setIsReviewEditing] = useState(false);
   const router = useRouter();
 
@@ -104,7 +98,7 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
       return toast.error('You need to be logged in');
     }
 
-    addToCart({ product: productDetails, quantity: productQuantity });
+    addToCart({ product: productDetails, quantity: 1 });
   };
 
   const { data: reviews = [] } = useQuery({
@@ -141,9 +135,9 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
 
   return (
     <main className="py-2 lg:py-6 max-w-4xl mx-auto space-y-10">
-      <div className="rounded-md grid grid-cols-10 gap-10">
-        <PhotoView src={imageUrl}>
-          <div className="relative w-full col-span-4">
+      <div className="rounded-md grid grid-cols-1 gap-5 sm:grid-cols-10">
+        <div className="relative w-full h-52 sm:col-span-4 sm:h-auto">
+          <PhotoView src={imageUrl}>
             <Image
               className="object-cover object-center bg-primary-50/50 rounded-xl shadow"
               src={imageUrl}
@@ -151,17 +145,16 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
               quality={95}
               fill
             />
-          </div>
-        </PhotoView>
-        <div className="col-span-6 space-y-2">
-          <h2 className="md:text-2xl font-medium capitalize text-primary-950 text-xl tracking-tight">
+          </PhotoView>
+        </div>
+        <div className="space-y-2.5 sm:col-span-6">
+          <h2 className="md:text-2xl font-medium capitalize text-primary-950 text-xl tracking-tight dark:text-primary-50/90">
             {name}
           </h2>
-          <div className="flex flex-wrap gap-2.5 items-center text-primary-600 pb-3">
-            <div className="flex items-center">
-              <span className="font-medium">{ratingAvg}</span>{' '}
-              <AiFillStar className="text-lg text-yellow-500" />
-              &nbsp;Ratings
+          <div className="flex flex-wrap gap-3 items-center text-primary-600 pb-3 dark:text-primary-300">
+            <div className="flex items-center gap-x-1">
+              <span className="font-medium">{ratingAvg}</span>
+              <AiFillStar className="text-yellow-500" /> &nbsp;Ratings
             </div>
             <RxDotFilled className="text-xs" />
             <div>
@@ -174,7 +167,7 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
             </div>
           </div>
           <div className="flex justify-between items-center pb-3">
-            <p className="flex items-center text-2xl sm:text-3xl font-medium text-gray-800">
+            <p className="flex items-center text-2xl sm:text-3xl font-medium text-gray-800 dark:text-primary-200">
               <BiDollar />
               <span>{price}</span>
             </p>
@@ -189,7 +182,9 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
               </Button>
             </div>
           </div>
-          <p className="text-primary-600 leading-relaxed">{description}</p>
+          <p className="text-primary-600 dark:text-primary-300 leading-relaxed">
+            {description}
+          </p>
           <div className="flex gap-1 items-center pt-4">
             <Button
               variant="ghost"
@@ -212,22 +207,20 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
         <div className="flex sticky top-0 justify-between items-center pb-3 text-xl">
           <h3 className="font-medium capitalize">Top Reviews</h3>
           {user?._id ? (
-            <Button
-              size="sm"
-              className={cn(isReviewEditing ? 'bg-red-500' : 'bg-accent-500')}
-              onClick={handleReviewEditing}>
-              {isReviewEditing ? (
-                <>
-                  <MdOutlineClose className="text-xl" />
-                  <span>Cancel</span>
-                </>
-              ) : (
-                <>
-                  <MdAdd className="text-xl" />
-                  <span>Add Review</span>
-                </>
-              )}
-            </Button>
+            isReviewEditing ? (
+              <Button
+                size="sm"
+                variant="destructive"
+                onClick={handleReviewEditing}>
+                <MdOutlineClose className="text-xl" />
+                <span>Cancel</span>
+              </Button>
+            ) : (
+              <Button size="sm" onClick={handleReviewEditing}>
+                <MdAdd className="text-xl" />
+                <span>Add Review</span>
+              </Button>
+            )
           ) : (
             <p>Login to add review</p>
           )}

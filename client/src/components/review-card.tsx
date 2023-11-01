@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import { Button } from './ui/button';
 
 type ReviewCardProps = Review & {
-  isTestimonial: boolean;
+  isTestimonial?: boolean;
 };
 
 const ReviewCard = ({
@@ -39,7 +39,7 @@ const ReviewCard = ({
   });
 
   return (
-    <li className="space-y-3 p-3 bg-white rounded-xl border shadow-sm border-primary-50">
+    <li className="space-y-3 px-4 py-3.5 bg-white rounded-xl border shadow-sm border-primary-50 dark:bg-primary-950 dark:border-primary-800">
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
           <Avatar>
@@ -53,7 +53,7 @@ const ReviewCard = ({
           </Avatar>
           <div className="leading-none ps-1">
             <p className="font-medium">{user?.userName}</p>
-            <p className="text-sm text-primary-600">
+            <p className="text-sm text-primary-600 dark:text-primary-300">
               {format(new Date(createdAt), 'MMMM d, yyyy')}
             </p>
           </div>
@@ -63,7 +63,7 @@ const ReviewCard = ({
           <span>{rating}</span>
         </div>
       </div>
-      <p className="p-1 text-primary-800">{comment}</p>
+      <p className="p-1 text-primary-800 dark:text-primary-200">{comment}</p>
       {!isTestimonial && authUser?.email === user?.email && (
         <Button
           variant="destructive"

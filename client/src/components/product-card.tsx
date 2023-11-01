@@ -72,8 +72,8 @@ const ProductCard = ({
           </div>
         </div>
         <p className="text-primary-400">
-          {description.length > 100
-            ? description.slice(0, 100) + '...'
+          {description.length > 80
+            ? description.slice(0, 80) + '...'
             : description}
         </p>
         <footer className="flex justify-between items-center pt-3 lg:pt-5">

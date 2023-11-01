@@ -11,15 +11,20 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import type { Product } from '@/types/types';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
 
-const sortOptions = ['default', 'ratings', 'prices', 'sales'];
+const sortOptions = [
+  { title: 'Ratings', value: 'ratingAvg' },
+  { title: 'Prices', value: 'price' },
+  { title: 'Sales', value: 'salesCount' },
+] as const;
 
 const Products = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [searchString, setSearchString] = useState(router.query.search || '');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -50,7 +55,7 @@ const Products = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['products'],
+    queryKey: ['products', searchString],
     queryFn: async () => {
       try {
         const { data } = await axios.get(`/products?search=${searchString}`);
@@ -60,6 +65,23 @@ const Products = () => {
       }
     },
   });
+
+  useEffect(() => {
+    queryClient.setQueryData(
+      ['products', searchString],
+      (prevProducts: Product[]) => {
+        if (!prevProducts) {
+          return prevProducts;
+        }
+
+        const sorted = prevProducts.sort(
+          (a, b) => b[productSort] - a[productSort]
+        );
+
+        return sorted;
+      }
+    );
+  }, [productSort]);
 
   return (
     <section className="space-y-4 py-5">
@@ -96,9 +118,9 @@ const Products = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                {sortOptions.map((option: string) => (
-                  <SelectItem key={option} value={option}>
-                    {option}
+                {sortOptions.map(({ value, title }) => (
+                  <SelectItem key={value} value={value}>
+                    {title}
                   </SelectItem>
                 ))}
               </SelectGroup>

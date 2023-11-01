@@ -1,19 +1,17 @@
+import { Button } from '@/components/ui/button';
+import ThemeToggle from '@/components/ui/theme-toggle';
+import { useAuthContext } from '@/context/auth-context';
 import Link from 'next/link';
-import Logo from './logo';
 import {
-  AiOutlineSearch,
-  AiOutlineHome,
   AiOutlineHeart,
+  AiOutlineHome,
+  AiOutlineSearch,
   AiOutlineShoppingCart,
   AiOutlineUser,
 } from 'react-icons/ai';
-import ThemeToggle from '@/components/ui/theme-toggle';
+import Logo from './logo';
 import MobileMenu from './mobile-menu';
-import { Button } from '@/components/ui/button';
 import UserProfile from './user-profile';
-import { useAuthContext } from '@/context/auth-context';
-import { auth } from '@/firebase/firebase.config';
-import { signOut } from 'firebase/auth';
 
 const navLinks = [
   {
@@ -56,7 +54,7 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-20 py-2 flex items-center justify-between dark:bg-primary-900 dark:text-primary-50/90 bg-[#EEEEF2] text-primary-950/90">
       <Logo />
-      <nav className="flex items-center gap-x-1.5">
+      <nav className="flex items-center gap-x-2">
         <ul className="md:flex gap-x-1 items-center lg:gap-x-2.5 hidden">
           {navLinks.map(({ href, title, Icon, isProtected }) =>
             !isProtected || (isProtected && user) ? (
@@ -83,9 +81,6 @@ const Navbar = () => {
         )}
         <ThemeToggle />
         <MobileMenu />
-        <Button variant="destructive" onClick={() => signOut(auth)}>
-          logout
-        </Button>
       </nav>
     </header>
   );

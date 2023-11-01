@@ -22,8 +22,12 @@ const navLinks = [
     href: '/wishlist',
   },
   {
-    title: 'Shopping Cart',
+    title: 'Cart',
     href: '/cart',
+  },
+  {
+    title: 'Profile',
+    href: '/profile',
   },
 ] as const;
 
@@ -32,7 +36,7 @@ function MobileMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="md:hidden">
         <Button size="icon" variant="outline">
-          <HiMenu className="text-2xl" />
+          <HiMenu className="text-xl" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="p-2.5 mx-2.5 my-1 ">
