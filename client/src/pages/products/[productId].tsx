@@ -111,9 +111,7 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
     queryKey: ['reviews', user?._id],
     queryFn: async () => {
       try {
-        const { data } = await axios.get<Review[]>(
-          `/reviews?productId=${user?._id}`
-        );
+        const { data } = await axios.get<Review[]>(`/reviews/${_id}`);
         return data;
       } catch (error) {
         console.error(error);
@@ -142,10 +140,10 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
   };
 
   return (
-    <main className="grid grid-cols-1 gap-6 py-2 lg:py-6 lg:grid-cols-10">
-      <div className="rounded-md lg:col-span-3">
+    <main className="py-2 lg:py-6 max-w-4xl mx-auto space-y-10">
+      <div className="rounded-md grid grid-cols-10 gap-10">
         <PhotoView src={imageUrl}>
-          <div className="relative w-full h-[20rem]">
+          <div className="relative w-full col-span-4">
             <Image
               className="object-cover object-center bg-primary-50/50 rounded-xl shadow"
               src={imageUrl}
@@ -155,73 +153,81 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
             />
           </div>
         </PhotoView>
-      </div>
-      <div className="lg:col-span-4 space-y-2">
-        <h2 className="md:text-2xl font-medium capitalize text-primary-950 text-xl tracking-tight">
-          {name}
-        </h2>
-        <div className="flex flex-wrap gap-2.5 items-center text-primary-600 pb-3">
-          <div className="flex items-center">
-            <span className="font-medium">{ratingAvg}</span>{' '}
-            <AiFillStar className="text-lg text-yellow-500" />
-            &nbsp;Ratings
+        <div className="col-span-6 space-y-2">
+          <h2 className="md:text-2xl font-medium capitalize text-primary-950 text-xl tracking-tight">
+            {name}
+          </h2>
+          <div className="flex flex-wrap gap-2.5 items-center text-primary-600 pb-3">
+            <div className="flex items-center">
+              <span className="font-medium">{ratingAvg}</span>{' '}
+              <AiFillStar className="text-lg text-yellow-500" />
+              &nbsp;Ratings
+            </div>
+            <RxDotFilled className="text-xs" />
+            <div>
+              <span className="font-medium">{stock}</span>
+              <span> In Stock </span>
+            </div>
+            <RxDotFilled className="text-xs" />
+            <div>
+              <span className="font-medium">{salesCount}+</span> Sold
+            </div>
           </div>
-          <RxDotFilled className="text-xs" />
-          <div>
-            <span className="font-medium">{stock}</span>
-            <span> In Stock </span>
+          <div className="flex justify-between items-center pb-3">
+            <p className="flex items-center text-2xl sm:text-3xl font-medium text-gray-800">
+              <BiDollar />
+              <span>{price}</span>
+            </p>
+            <div className="flex gap-2 items-center">
+              <Button onClick={handleCheckout}>
+                <BsTag className="text-lg hidden md:block" />
+                <span>Buy Now</span>
+              </Button>
+              <Button variant="outline" onClick={handleAddToCart}>
+                <BsCart3 className="text-lg hidden md:block" />
+                <span>Add to Cart</span>
+              </Button>
+            </div>
           </div>
-          <RxDotFilled className="text-xs" />
-          <div>
-            <span className="font-medium">{salesCount}+</span> Sold
-          </div>
-        </div>
-        <div className="flex justify-between items-center pb-3">
-          <p className="flex items-center text-2xl sm:text-3xl font-medium text-gray-800">
-            <BiDollar />
-            <span>{price}</span>
-          </p>
-          <div className="flex gap-2 items-center">
-            <Button onClick={handleCheckout}>
-              <BsTag className="text-lg hidden md:block" />
-              <span>Buy Now</span>
+          <p className="text-primary-600 leading-relaxed">{description}</p>
+          <div className="flex gap-1 items-center pt-4">
+            <Button
+              variant="ghost"
+              className="shadow-none text-accent-600"
+              size="sm">
+              <BsFillShareFill />
+              <span>Share Product</span>
             </Button>
-            <Button variant="outline" onClick={handleAddToCart}>
-              <BsCart3 className="text-lg hidden md:block" />
-              <span>Add to Cart</span>
+            <Button
+              variant="ghost"
+              className="shadow-none text-accent-600"
+              size="sm">
+              <GoReport />
+              <span>Report Product</span>
             </Button>
           </div>
         </div>
-        <p className="text-primary-600 leading-relaxed">{description}</p>
-        <div className="flex gap-1 items-center pt-4">
-          <Button
-            variant="ghost"
-            className="shadow-none text-accent-600"
-            size="sm">
-            <BsFillShareFill />
-            <span>Share Product</span>
-          </Button>
-          <Button
-            variant="ghost"
-            className="shadow-none text-accent-600"
-            size="sm">
-            <GoReport />
-            <span>Report Product</span>
-          </Button>
-        </div>
       </div>
-      <div className="overflow-y-scroll pb-5 h-screen lg:col-span-3 p-1 no-scrollbar">
+      <div className="">
         <div className="flex sticky top-0 justify-between items-center pb-3 text-xl">
           <h3 className="font-medium capitalize">Top Reviews</h3>
           {user?._id ? (
-            <button
-              className={cn(
-                'p-1 text-xl text-white rounded-full',
-                isReviewEditing ? 'bg-red-500' : 'bg-accent-500'
-              )}
+            <Button
+              size="sm"
+              className={cn(isReviewEditing ? 'bg-red-500' : 'bg-accent-500')}
               onClick={handleReviewEditing}>
-              {isReviewEditing ? <MdOutlineClose /> : <MdAdd />}
-            </button>
+              {isReviewEditing ? (
+                <>
+                  <MdOutlineClose className="text-xl" />
+                  <span>Cancel</span>
+                </>
+              ) : (
+                <>
+                  <MdAdd className="text-xl" />
+                  <span>Add Review</span>
+                </>
+              )}
+            </Button>
           ) : (
             <p>Login to add review</p>
           )}
@@ -231,7 +237,7 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
           setIsReviewEditing={setIsReviewEditing}
           productId={_id || ''}
         />
-        <ul className="grid gap-3 lg:gap-4">
+        <ul className="gap-3 lg:gap-4 grid grid-cols-3">
           {reviews?.map((review) => (
             <ReviewCard key={review._id} {...review} />
           ))}

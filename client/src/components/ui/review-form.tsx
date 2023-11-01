@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useAuthContext } from '@/context/auth-context';
 import { cn } from '@/lib/utils';
-import { Review } from '@/types/types';
+import { Review, User } from '@/types/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { AiFillStar } from 'react-icons/ai';
@@ -34,24 +34,11 @@ const ReviewForm = ({
 
       await axios.post('/reviews', newReview);
     },
-    onMutate: (newReview) => {
-      queryClient.setQueryData(
-        ['reviews', user?._id],
-        (prevReviews: Review[]) => [
-          {
-            ...newReview,
-            user,
-            createdAt: Date.now(),
-          },
-          ...prevReviews,
-        ]
-      );
-    },
     onSuccess: () => {
       toast.success('Review added');
       setReviewComment('');
       setIsReviewEditing(false);
-      queryClient.invalidateQueries({ queryKey: [['reviews', user?._id]] });
+      queryClient.invalidateQueries({ queryKey: ['reviews', user?._id] });
     },
     onError: (error: any) => {
       toast.error('Something went wrong');

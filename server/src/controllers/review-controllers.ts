@@ -55,11 +55,17 @@ export const deleteReview = async (
   next: NextFunction
 ) => {
   try {
-    const { productId } = req.params;
+    const { productId } = req.query;
 
     if (!isValidObjectId(productId)) {
       return res.status(400).json({ message: 'Invalid id' });
     }
+
+    // console.log(
+    //   await Review.findOne({ product: productId })
+    //     .populate(['product', 'user'])
+    //     .lean()
+    // );
 
     const deleteResult = await Review.deleteOne({ product: productId });
 

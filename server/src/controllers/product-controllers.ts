@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response, query } from 'express';
 import { isValidObjectId } from 'mongoose';
 import Product from '../models/product-model';
 import { productSchema } from '../utils/schemas';
@@ -57,20 +57,41 @@ export const getProductById = async (
   }
 };
 
-export const getAllProducts = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const products = await Product.find({}).lean();
+// export const getAllProducts = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const products = await Product.find({}).lean();
 
-    if (products) {
-      return res.status(200).json(products);
+//     if (products) {
+//       return res.status(200).json(products);
+//     }
+
+//     res.status(404).json({ message: 'No product found' });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+export const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    const { search } = req.query;
+    let query = {};
+
+    if (search) {
+      query = { $text: { $search: search } };
     }
 
-    res.status(404).json({ message: 'No product found' });
+    const products = await Product.find(query);
+
+    if (products.length === 0) {
+      return res.status(404).json({ message: 'No products found' });
+    }
+
+    res.status(200).json(products);
   } catch (error) {
-    next(error);
+    res.status(500).json(error);
   }
 };

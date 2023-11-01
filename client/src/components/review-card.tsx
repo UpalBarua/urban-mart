@@ -1,20 +1,32 @@
-import { AiOutlineUser, AiFillStar, AiOutlineDelete } from 'react-icons/ai';
-import type { Review } from '@/types/types';
-import { format } from 'date-fns';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from '@/api/axios';
-import { toast } from 'sonner';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuthContext } from '@/context/auth-context';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import type { Review } from '@/types/types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { format } from 'date-fns';
+import { AiFillStar, AiOutlineDelete } from 'react-icons/ai';
+import { toast } from 'sonner';
+import { Button } from './ui/button';
 
-const ReviewCard = ({ _id, user, comment, rating, createdAt }: Review) => {
+type ReviewCardProps = Review & {
+  isTestimonial: boolean;
+};
+
+const ReviewCard = ({
+  user,
+  comment,
+  rating,
+  createdAt,
+  product,
+  isTestimonial,
+}: ReviewCardProps) => {
   const queryClient = useQueryClient();
 
   const { user: authUser } = useAuthContext();
 
   const { mutate: handleReviewDelete } = useMutation({
     mutationFn: async () => {
-      await axios.delete(`/reviews?productId=${_id}`);
+      await axios.delete(`/reviews?productId=${product._id}`);
     },
     onSuccess: () => {
       toast.success('Review deleted');
@@ -52,15 +64,15 @@ const ReviewCard = ({ _id, user, comment, rating, createdAt }: Review) => {
         </div>
       </div>
       <p className="p-1 text-primary-800">{comment}</p>
-      <footer className="flex justify-between items-center text-primary-500">
-        {authUser?.email === user?.email && (
-          <button
-            className="flex gap-1 items-center p-1 text-lg text-red-500 bg-red-100 rounded-md"
-            onClick={() => handleReviewDelete()}>
-            <AiOutlineDelete />
-          </button>
-        )}
-      </footer>
+      {!isTestimonial && authUser?.email === user?.email && (
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={() => handleReviewDelete()}>
+          <AiOutlineDelete className="text-xl" />
+          <span>Delete</span>
+        </Button>
+      )}
     </li>
   );
 };
