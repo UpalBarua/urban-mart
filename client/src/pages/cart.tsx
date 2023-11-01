@@ -10,11 +10,8 @@ import { useMemo } from 'react';
 
 const CartPage = () => {
   const router = useRouter();
-
-  const { cartProducts, removeCartItem, setCartItemQuantity } =
-    useCartContext();
-
   const { user } = useAuthContext();
+  const { cartProducts } = useCartContext();
 
   const subTotal = useMemo(
     () =>

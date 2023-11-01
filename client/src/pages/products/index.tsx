@@ -66,22 +66,22 @@ const Products = () => {
     },
   });
 
-  useEffect(() => {
-    queryClient.setQueryData(
-      ['products', searchString],
-      (prevProducts: Product[]) => {
-        if (!prevProducts) {
-          return prevProducts;
-        }
+  // useEffect(() => {
+  //   queryClient.setQueryData(
+  //     ['products', searchString],
+  //     (prevProducts: Product[]) => {
+  //       if (!prevProducts) {
+  //         return prevProducts;
+  //       }
 
-        const sorted = prevProducts.sort(
-          (a, b) => b[productSort] - a[productSort]
-        );
+  //       const sorted = prevProducts.sort(
+  //         (a, b) => b[productSort] - a[productSort]
+  //       );
 
-        return sorted;
-      }
-    );
-  }, [productSort]);
+  //       return sorted;
+  //     }
+  //   );
+  // }, [productSort]);
 
   return (
     <section className="space-y-4 py-5">

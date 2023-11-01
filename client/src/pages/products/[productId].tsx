@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import ReviewForm from '@/components/ui/review-form';
 import { useAuthContext } from '@/context/auth-context';
 import { useCartContext } from '@/context/cart-context';
-import { cn } from '@/lib/utils';
 import type { Product, Review } from '@/types/types';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -86,7 +85,6 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
     name,
     imageUrl,
     ratingAvg,
-    reviewsCount,
     salesCount,
     description,
     price,
@@ -114,23 +112,23 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
   });
 
   const handleCheckout = async () => {
-    // if (!userId) {
-    //   return toast.error('You need to be logged in');
-    // }
-    // try {
-    //   const { data } = await axios.post('/payment/create-checkout-session', {
-    //     products: [{ product: productDetails, quantity: productQuantity }],
-    //   });
-    //   if (data?.url) {
-    //     await axios.post('/orders', {
-    //       user: userId,
-    //       orders: [{ product: productDetails, quantity: productQuantity }],
-    //     });
-    //     router.push(data.url);
-    //   }
-    // } catch (error: any) {
-    //   console.log(error.message);
-    // }
+    if (!user?._id) {
+      return toast.error('You need to be logged in');
+    }
+    try {
+      const { data } = await axios.post('/payment/create-checkout-session', {
+        products: [{ product: productDetails, quantity: 1 }],
+      });
+      // if (data?.url) {
+      //   await axios.post('/orders', {
+      //     user: userId,
+      //     orders: [{ product: productDetails, quantity: productQuantity }],
+      //   });
+      //   router.push(data.url);
+      // }
+    } catch (error: any) {
+      console.log(error.message);
+    }
   };
 
   return (

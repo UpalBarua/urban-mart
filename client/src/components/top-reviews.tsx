@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { AiFillStar, AiOutlineUser } from 'react-icons/ai';
 import ReviewCard from './review-card';
+import { Review } from '@/types/types';
 
 const TopReviews = () => {
   const { data: topReviews = [] } = useQuery<Review[]>({

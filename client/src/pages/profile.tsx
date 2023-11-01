@@ -1,38 +1,32 @@
-import { useRouter } from 'next/router';
-import { AiOutlineUser } from 'react-icons/ai';
-import { format } from 'date-fns';
-import { toast } from 'sonner';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { signOut } from 'firebase/auth';
 import axios from '@/api/axios';
-import { auth } from '@/firebase/firebase.config';
-import { useAuthContext } from '@/context/auth-context';
-import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { useAuthContext } from '@/context/auth-context';
+import { auth } from '@/firebase/firebase.config';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { signOut } from 'firebase/auth';
+import { useRouter } from 'next/router';
 
 const ProfilePage = () => {
   const { user } = useAuthContext();
-
   const router = useRouter();
 
-  const queryClient = useQueryClient();
-
-  const {
-    data: profileOrders = [],
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ['profileOrders', user?._id],
-    queryFn: async () => {
-      try {
-        const { data } = await axios.get(`/orders/${user?._id}`);
-        return data;
-      } catch (error: any) {
-        console.log(error.message);
-      }
-    },
-    enabled: !!user?._id,
-  });
+  // const {
+  //   data: profileOrders = [],
+  //   isLoading,
+  //   isError,
+  // } = useQuery({
+  //   queryKey: ['profileOrders', user?._id],
+  //   queryFn: async () => {
+  //     try {
+  //       const { data } = await axios.get(`/orders/${user?._id}`);
+  //       return data;
+  //     } catch (error: any) {
+  //       console.log(error.message);
+  //     }
+  //   },
+  //   enabled: !!user?._id,
+  // });
 
   const handleSignOut = async () => {
     try {

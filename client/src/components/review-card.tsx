@@ -1,7 +1,7 @@
 import axios from '@/api/axios';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuthContext } from '@/context/auth-context';
-import type { Review } from '@/types/types';
+import type { Product, Review, User } from '@/types/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { AiFillStar, AiOutlineDelete } from 'react-icons/ai';
@@ -24,9 +24,12 @@ const ReviewCard = ({
 
   const { user: authUser } = useAuthContext();
 
+  const { photoURL, userName, email } = user as User;
+  const { _id: productId } = product as Product;
+
   const { mutate: handleReviewDelete } = useMutation({
     mutationFn: async () => {
-      await axios.delete(`/reviews?productId=${product._id}`);
+      await axios.delete(`/reviews?productId=${productId}`);
     },
     onSuccess: () => {
       toast.success('Review deleted');
@@ -43,16 +46,16 @@ const ReviewCard = ({
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
           <Avatar>
-            <AvatarImage src={user?.photoURL} alt={user?.userName} />
+            <AvatarImage src={photoURL} alt={userName} />
             <AvatarFallback>
-              {user?.userName
+              {userName
                 .split(' ')
                 .map((letter) => letter.charAt(0).toUpperCase())
                 .join('')}
             </AvatarFallback>
           </Avatar>
           <div className="leading-none ps-1">
-            <p className="font-medium">{user?.userName}</p>
+            <p className="font-medium">{userName}</p>
             <p className="text-sm text-primary-600 dark:text-primary-300">
               {format(new Date(createdAt), 'MMMM d, yyyy')}
             </p>
@@ -64,7 +67,7 @@ const ReviewCard = ({
         </div>
       </div>
       <p className="p-1 text-primary-800 dark:text-primary-200">{comment}</p>
-      {!isTestimonial && authUser?.email === user?.email && (
+      {!isTestimonial && authUser?.email === email && (
         <Button
           variant="destructive"
           size="sm"
