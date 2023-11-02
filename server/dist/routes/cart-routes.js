@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const cart_controllers_1 = require("../controllers/cart-controllers");
+const router = (0, express_1.Router)();
+router.post('/', cart_controllers_1.createNewCart);
+router.get('/:userId', cart_controllers_1.getCartById);
+router.put('/:userId', cart_controllers_1.insertCartItem);
+router.patch('/:userId', cart_controllers_1.setCartItemQuantity);
+router.delete('/:userId', cart_controllers_1.removeCartItem);
+exports.default = router;
