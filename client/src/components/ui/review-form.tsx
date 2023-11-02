@@ -37,6 +37,7 @@ const ReviewForm = ({
     onSuccess: () => {
       toast.success('Review added');
       setReviewComment('');
+      setRating(0);
       setIsReviewEditing(false);
       queryClient.invalidateQueries({ queryKey: ['reviews', user?._id] });
     },

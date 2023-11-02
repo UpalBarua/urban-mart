@@ -17,6 +17,7 @@ import { MdAdd, MdOutlineClose } from 'react-icons/md';
 import { RxDotFilled } from 'react-icons/rx';
 import { PhotoView } from 'react-photo-view';
 import { toast } from 'sonner';
+import Link from 'next/link';
 
 export const getStaticPaths = async () => {
   try {
@@ -220,7 +221,13 @@ function ProductDetails({ productDetails }: { productDetails: Product }) {
               </Button>
             )
           ) : (
-            <p>Login to add review</p>
+            <p className="text-base">
+              Please{' '}
+              <Link className="text-accent-500" href="/login">
+                login
+              </Link>{' '}
+              to post your review
+            </p>
           )}
         </div>
         <ReviewForm

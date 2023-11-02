@@ -36,7 +36,7 @@ const GoogleAuthButton = ({ setError }: GoogleAuthButtonProps) => {
     onSuccess: () => {
       toast.success('Successfully logged in');
       router.push('/');
-      window.location.reload();
+      setError('');
     },
     onError: (error) => {
       console.error(error);

@@ -1,3 +1,4 @@
+import { useAuthContext } from '@/context/auth-context';
 import { useCartContext } from '@/context/cart-context';
 import { useWishListContext } from '@/context/wishlist-context';
 import type { Product } from '@/types/types';
@@ -7,6 +8,7 @@ import { MouseEvent } from 'react';
 import { AiFillHeart, AiFillStar, AiOutlineHeart } from 'react-icons/ai';
 import { BiDollar } from 'react-icons/bi';
 import { BsCartPlus, BsFillCartCheckFill } from 'react-icons/bs';
+import { toast } from 'sonner';
 
 const ProductCard = ({
   _id,
@@ -21,10 +23,16 @@ const ProductCard = ({
     useWishListContext();
   const { addToCart, checkProductInCart } = useCartContext();
 
+  const { user } = useAuthContext();
+
   const handleAddToCart = (
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     event.preventDefault();
+
+    if (!user?._id) {
+      return toast.error('Please log in to add products to your cart');
+    }
 
     addToCart({
       product: {
@@ -44,6 +52,10 @@ const ProductCard = ({
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     event.preventDefault();
+
+    if (!user?._id) {
+      return toast.error('Please log in to add products to your wishlist');
+    }
 
     if (_id) {
       toggleWishlistProduct(_id);

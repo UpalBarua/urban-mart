@@ -55,29 +55,18 @@ const getProductById = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.getProductById = getProductById;
-// export const getAllProducts = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const products = await Product.find({}).lean();
-//     if (products) {
-//       return res.status(200).json(products);
-//     }
-//     res.status(404).json({ message: 'No product found' });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { search } = req.query;
         let query = {};
+        let sortOptions = {};
+        const { search, sort } = req.query;
         if (search) {
             query = { $text: { $search: search } };
         }
-        const products = yield product_model_1.default.find(query);
+        if (sort) {
+            sortOptions = { [sort]: -1 };
+        }
+        const products = yield product_model_1.default.find(query).sort(sortOptions);
         if (products.length === 0) {
             return res.status(404).json({ message: 'No products found' });
         }

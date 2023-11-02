@@ -10,7 +10,7 @@ const SearchBar = () => {
 
   return (
     <form
-      className="flex items-center relative w-9/12 mt-8 h-12"
+      className="flex items-center relative w-9/12 mt-8 h-12 mx-auto sm:mx-0"
       onSubmit={(event) => {
         event.preventDefault();
         router.push(`/products?search=${searchString}`);
@@ -24,7 +24,6 @@ const SearchBar = () => {
       />
       <Button
         size="icon"
-        variant="ghost"
         className="rounded-l-none rounded-r-xl absolute right-0 shadow-none top-0 h-full sm:h-full sm:w-14">
         <BsSearch className="text-xl" />
       </Button>

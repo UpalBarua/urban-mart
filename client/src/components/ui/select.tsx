@@ -17,7 +17,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex h-10 w-full items-center justify-between rounded-lg border border-primary-200 bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-primary-800 dark:bg-primary-950 dark:ring-offset-primary-950 dark:placeholder:text-primary-400 dark:focus:ring-primary-300',
+      'flex h-10 w-full items-center justify-between rounded-lg border border-primary-50 bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-primary-800 dark:bg-primary-950 dark:ring-offset-primary-950 dark:placeholder:text-primary-400 dark:focus:ring-primary-300',
       className
     )}
     {...props}>
@@ -37,7 +37,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        'relative z-50 min-w-[8rem] overflow-hidden rounded-md border border-primary-200 bg-white text-primary-950 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:border-primary-800 dark:bg-primary-950 dark:text-primary-50',
+        'relative z-50 min-w-[8rem] overflow-hidden rounded-lg border border-primary-50 bg-white text-primary-950 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:border-primary-800 dark:bg-primary-950 dark:text-primary-50',
         position === 'popper' &&
           'data-[side=bottom]:tranprimary-y-1 data-[side=left]:-tranprimary-x-1 data-[side=right]:tranprimary-x-1 data-[side=top]:-tranprimary-y-1',
         className
@@ -76,7 +76,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex w-full cursor-default select-none items-center rounded-lg py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-primary-100 focus:text-primary-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-primary-800 dark:focus:text-primary-50',
+      'relative flex w-full cursor-default select-none items-center rounded-lg py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-primary-50/50 focus:text-primary-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-primary-800/80 dark:focus:text-primary-50',
       className
     )}
     {...props}>

@@ -63,7 +63,6 @@ const RegisterPage = () => {
       reset();
       setRegisterError('');
       router.push('/');
-      window.location.reload();
     },
     onError: (error) => {
       console.error(error);

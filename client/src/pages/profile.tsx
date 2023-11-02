@@ -31,15 +31,14 @@ const ProfilePage = () => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      router.push('/login');
-      window.location.reload();
+      router.push('/');
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <main>
+    <main className="py-5">
       <div className="flex gap-4 items-center">
         <Avatar>
           <AvatarImage src={user?.photoURL} alt={user?.userName} />
@@ -50,12 +49,12 @@ const ProfilePage = () => {
               .join('')}
           </AvatarFallback>
         </Avatar>
-        <div className="hidden lg:block">
+        <div className="hidden lg:block pe-4">
           <p className="font-semibold">{user?.userName}</p>
           <p className="text-sm text-gray-600">{user?.email}</p>
         </div>
-        <Button variant="destructive" onClick={handleSignOut}>
-          Log Out
+        <Button variant="destructive" size="sm" onClick={handleSignOut}>
+          Logout
         </Button>
       </div>
     </main>
